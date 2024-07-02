@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <link rel="stylesheet" href="stryle.css">
+</head>
+<body>
+    <div class="container">
+        <h4>TP1 - Pio Keep - Bloc de notas</h4>
+        <h4>Alumnos: Abril Duro y Delfina Carrera</h4>
+        <h5>5to A Informática 2023 - Colegio Pio IX. Profesores: Nicolás Facón y Matías Marchesi</h5>
+        <div id="login">
+            <div class="shadow p-3 mb-5 bg-white rounded">
+                <h3>Login</h3>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input class="form-control" type="text" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input class="form-control" type="text" id="password">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-success btn-lg btn-block form-check-control" onclick="ingresarUsuario()">Ingresar</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-danger btn-lg btn-block form-check-control" onclick="registrarNuevoUsuario()">Registrarse</button>
+                </div>
+            </div>
+        </div>
+        <div class="header" id="header" style="display: none">
+            <button class="menu-icon" onclick="aparecerOpciones()"></button>
+            
+            <h1>La palabra del día</h1>
+            <span class="settings-icon">⚙</span>
+        </div>
+        <div class="grid" id="grid" style="display: none">
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+            <div class="row">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+                <input type="text" class="cell" maxlength="1">
+            </div>
+        </div>
+        <div class="keyboard" id="keyboard" style="display: none">
+            <div class="keyboard-row">
+                <button class="key" onclick="teclaPresionada('A')">A</button>
+                <button class="key" onclick="teclaPresionada('B')">B</button>
+                <button class="key" onclick="teclaPresionada('C')">C</button>
+                <button class="key" onclick="teclaPresionada('D')">D</button>
+                <button class="key" onclick="teclaPresionada('E')">E</button>
+                <button class="key" onclick="teclaPresionada('F')">F</button>
+                <button class="key" onclick="teclaPresionada('G')">G</button>
+                <button class="key" onclick="teclaPresionada('H')">H</button>
+                <button class="key" onclick="teclaPresionada('I')">I</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key" onclick="teclaPresionada('J')">J</button>
+                <button class="key" onclick="teclaPresionada('K')">K</button>
+                <button class="key" onclick="teclaPresionada('L')">L</button>
+                <button class="key" onclick="teclaPresionada('M')">M</button>
+                <button class="key" onclick="teclaPresionada('N')">N</button>
+                <button class="key" onclick="teclaPresionada('O')">O</button>
+                <button class="key" onclick="teclaPresionada('P')">P</button>
+                <button class="key" onclick="teclaPresionada('Q')">Q</button>
+                <button class="key" onclick="teclaPresionada('R')">R</button>
+            </div>
+            <div class="keyboard-row">
+                <button class="key" onclick="teclaPresionada('S')">S</button>
+                <button class="key" onclick="teclaPresionada('T')">T</button>
+                <button class="key" onclick="teclaPresionada('U')">U</button>
+                <button class="key" onclick="teclaPresionada('V')">V</button>
+                <button class="key" onclick="teclaPresionada('W')">W</button>
+                <button class="key" onclick="teclaPresionada('X')">X</button>
+                <button class="key" onclick="teclaPresionada('Y')">Y</button>
+                <button class="key" onclick="teclaPresionada('Z')">Z</button>
+                <button class="key" onclick="borrarLetra()">Borrar</button>
+            </div>
+        </div>
+    </div>
+    <script src="dom.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
