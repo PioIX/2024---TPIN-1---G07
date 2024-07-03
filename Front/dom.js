@@ -16,3 +16,16 @@ function changeScreen() {
         login.style.display = "none";
     }
 }
+
+function changeScreen2() {
+    const header = document.getElementById("header");
+    const grid = document.getElementById("grid");
+    const keyboard = document.getElementById("keyboard");
+    const puntaje = document.getElementById("puntaje");
+    if(header.style.display !== "none" && grid.style.display !== "none" && keyboard.style.display !== "none") {
+        header.style.display = "none";
+        grid.style.display = "none";
+        keyboard.style.display = "none";
+        puntaje.style.display = "";
+    }
+}
