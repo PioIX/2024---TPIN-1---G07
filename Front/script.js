@@ -97,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function moverACeldaAnterior() {
-        if (indiceCeldaActual > 0) {
+      let multiplo = indiceCeldaActual % 5
+        if (indiceCeldaActual > 0 && multiplo != 0) {
             celdas[indiceCeldaActual].value = '';
             indiceCeldaActual--;
             celdas[indiceCeldaActual].focus();
@@ -138,7 +139,7 @@ async function elegirPalabra() {
     console.log(caracteres_palabra_elegida)
 }
 
-let fila = 0
+let puntaje = 0
 function chequearPalabra() {
   let palabra_chequeada = []
   let letras_faltantes = []
@@ -155,6 +156,8 @@ function chequearPalabra() {
       celdas2.push(celdas[i].value)
     }
     for (let i = 0; i < 5; i++) {
+      document.getElementById(i+(5*comienzoFila)).readonly = true
+      document.getElementById(i+(5*comienzoFila)).disabled = true
       if (celdas[indiceCeldaActual-(5 - i)].value == caracteres_palabra_elegida[i]) {
         palabra_chequeada.push(".")
         celdas2[i] = "."
@@ -184,9 +187,31 @@ function chequearPalabra() {
       contador++;
   }
   if (contador==5) {
-    alert("Haz ganado") 
-    //changeScreen2
+    let i = 0
+    while(i<6) {
+      if (comienzoFila==i) 
+        puntaje = 6-i
+      i++;
+    }
+    changeScreen2()
   }
   console.log(palabra_chequeada)
   console.log(letras_faltantes)
+}
+
+async function sumarPuntaje() {
+  const data = {
+    puntaje_usuario: puntaje,
+    id_usuario: id_usuario_logueado
+ }
+
+ const response = await fetch('http://localhost:3000/modificarUsuarioPuntaje',{
+     method:"PUT",
+     headers: {
+         "Content-Type": "application/json",
+       },
+     body:JSON.stringify(data),
+ })
+ let result = await response.json()
+ document.getElementById("puntajetotal") = result.puntaje
 }

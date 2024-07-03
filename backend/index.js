@@ -76,10 +76,10 @@ app.get('/palabras', async function(req,res){
    
 })
 
-app.get('/partidas', async function(req,res){
-    console.log(req.query)
+app.post('/partidas', async function(req,res){
+    console.log(req.body)
     let respuesta = ""
-    if (req.query.id_usuario) {
+    if (req.body.id_usuario) {
          respuesta = await MySql.realizarQuery(`SELECT * FROM Partidas WHERE 
         id_usuario = "${req.query.id_usuario}";`)
     } 
@@ -120,8 +120,8 @@ app.post('/insertarUsuario', async function(req,res) {
     console.log(req.body)
     var usuarioNuevo = await MySql.realizarQuery(`SELECT * FROM Usuarios WHERE nombre_usuario = '${req.body.nombre_usuario}'`);
     if (usuarioNuevo.length==0) {
-        await MySql.realizarQuery(`INSERT INTO Usuarios (nombre_usuario, contraseña) 
-        VALUES ('${req.body.nombre_usuario}', '${req.body.contraseña}')`);
+        await MySql.realizarQuery(`INSERT INTO Usuarios (puntaje_usuario, partidas_ganadas, partidas_perdidas, nombre_usuario, contraseña) 
+        VALUES (0, 0, 0, '${req.body.nombre_usuario}', '${req.body.contraseña}')`);
         res.send("ok")
     } else {
         res.send("Ya existe");
@@ -140,10 +140,11 @@ app.put('/modificarPartida', async function(req,res){
     res.send("ok")
 })
 
-app.put('/modificarUsuario', async function(req,res){
+app.put('/modificarUsuarioPuntaje', async function(req,res){
     console.log(req.body)
-    await MySql.realizarQuery(`UPDATE Marcas SET contraseña = '${req.body.contraseña}' WHERE id_usuario= ${req.body.id_usuario}`);
-    res.send("ok")
+    response = await MySql.realizarQuery(`SELECT puntaje_usuario FROM Usuarios WHERE id_usuario= ${req.body.id_usuario}`);
+    await MySql.realizarQuery(`UPDATE Usuarios SET puntaje_usuario = '${req.body.puntaje_usuario + response[0].puntaje_usuario}' WHERE id_usuario= ${req.body.id_usuario}`);
+    res.send({puntaje: req.body.puntaje_usuario + response[0].puntaje_usuario})
 })
 
 app.delete('/eliminarPalabra', async function(req,res){

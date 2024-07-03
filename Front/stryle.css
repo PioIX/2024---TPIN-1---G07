@@ -76,3 +76,9 @@ body {
 .key:hover {
     background-color: #555;
 }
+
+
+.estadisticas {
+    display: flex;
+    justify-content: space-between;
+}
