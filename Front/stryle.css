@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #ccc;
+    background-color: #181e38;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,6 +25,51 @@ body {
 
 .menu-icon, .settings-icon {
     font-size: 24px;
+}
+
+h3{
+    color: #fff;
+}
+
+.login{
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+.botones{
+    display: inline-block;
+    text-align: center;
+}
+
+.boton1{
+    border-radius: 15px;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+}
+
+.boton2{
+    border-radius: 15px;
+    background-color: white;
+    display: inline-block;
+    text-align: center;
+}
+
+
+.form-group{
+    color: #fff;
+    font-size: 18px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-align: center;
+}
+
+.form-control {
+    color: #fff;
+    display: flex;
+    border-radius: 18px;
+    color: rgb(22, 22, 32);
 }
 
 .grid {
