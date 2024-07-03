@@ -35,6 +35,7 @@ async function ingresarUsuario() {
     //changeScreen();
     alert("Haz ingresado")
     changeScreen()
+    elegirPalabra()
   } else {
     alert("el usuario no existe o la contraseña no es correcta");
   }
@@ -57,6 +58,7 @@ async function registrarNuevoUsuario() {
       })
     
       console.log(response)
+      ingresarUsuario()
 }
 
 
@@ -90,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
          if (indiceCeldaActual < celdas.length - 1) {
             indiceCeldaActual++;
             console.log(indiceCeldaActual)
+            chequearPalabra();
         }
     }
 
@@ -135,50 +138,54 @@ async function elegirPalabra() {
     console.log(caracteres_palabra_elegida)
 }
 
+let fila = 0
 function chequearPalabra() {
   let palabra_chequeada = []
   let letras_faltantes = []
+  let celdas2 = []
   const celdas = document.querySelectorAll('.cell');
+  let comienzoFila = 0;
+  let i = 0;
+  while(celdas[i * 5].value != "" && i < 5)
+    i++;
+  comienzoFila = i - 1;
+
   if ((indiceCeldaActual % 5)  == 0){
-    if (celdas[indiceCeldaActual-5].value == caracteres_palabra_elegida[0]) {
-      palabra_chequeada.push(".")
-    } else {
-      palabra_chequeada.push(caracteres_palabra_elegida[0])
-      letras_faltantes.push(celdas[indiceCeldaActual-5].value)
+    for (let i = (comienzoFila * 5); i < ((comienzoFila * 5) + 5); i++) {
+      celdas2.push(celdas[i].value)
     }
-    if (celdas[indiceCeldaActual-4].value == caracteres_palabra_elegida[1]) {
-      console.log("hola")
-      palabra_chequeada.push(".")
-    } else {
-      palabra_chequeada.push(caracteres_palabra_elegida[1])
-      console.log("hola2")
-      letras_faltantes.push(celdas[indiceCeldaActual-4].value)
+    for (let i = 0; i < 5; i++) {
+      if (celdas[indiceCeldaActual-(5 - i)].value == caracteres_palabra_elegida[i]) {
+        palabra_chequeada.push(".")
+        celdas2[i] = "."
+        document.getElementById(i+(5*comienzoFila)).style.background = "#00ff00"
+      } else {
+        palabra_chequeada.push(caracteres_palabra_elegida[i])
+        letras_faltantes.push(celdas[indiceCeldaActual-(5 - i)].value)
+      }
     }
-    if (celdas[indiceCeldaActual-3].value == caracteres_palabra_elegida[2]) {
-      palabra_chequeada.push(".")
-    } else {
-      palabra_chequeada.push(caracteres_palabra_elegida[2])
-      letras_faltantes.push(celdas[indiceCeldaActual-3].value)
-    }
-    if (celdas[indiceCeldaActual-2].value == caracteres_palabra_elegida[3]) {
-      palabra_chequeada.push(".")
-    } else {
-      palabra_chequeada.push(caracteres_palabra_elegida[3])
-      letras_faltantes.push(celdas[indiceCeldaActual-2].value)
-    }
-    if (celdas[indiceCeldaActual-1].value == caracteres_palabra_elegida[4]) {
-      palabra_chequeada.push(".")
-    } else {
-      palabra_chequeada.push(caracteres_palabra_elegida[4])
-      letras_faltantes.push(celdas[indiceCeldaActual-1].value)
-    }
-    for (let i = 0; i < palabra_chequeada.length; i++) {
+    for (let i = 0; i < celdas2.length; i++) {
       if (palabra_chequeada[i]!=".") {
-        if (palabra_chequeada.includes(letras_faltantes[i])) {
+        console.log(`Voy a chequear ${celdas2[i]} pos ${i}`)
+        if (palabra_chequeada.includes(celdas2[i])) {
+
+          console.log(celdas2)
+          document.getElementById(i+(5*comienzoFila)).style.background = "#ffff00"
           palabra_chequeada[i] = "-"
+          console.log(`Celdas 2 quedo `, celdas2)
         }
       }
     }
+  }
+  let contador = 0; 
+
+  for (let i = 0; i < palabra_chequeada.length; i++) {
+    if (palabra_chequeada[i]==".")
+      contador++;
+  }
+  if (contador==5) {
+    alert("Haz ganado") 
+    //changeScreen2
   }
   console.log(palabra_chequeada)
   console.log(letras_faltantes)

@@ -10,7 +10,6 @@ var port = process.env.PORT || 3000; //Ejecuto el servidor en el puerto 3000
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
-
 app.get('/', function(req, res){
     res.status(200).send({
         message: 'GET Home route working fine!'
@@ -83,7 +82,7 @@ app.get('/partidas', async function(req,res){
     if (req.query.id_usuario) {
          respuesta = await MySql.realizarQuery(`SELECT * FROM Partidas WHERE 
         id_usuario = "${req.query.id_usuario}";`)
-    }
+    } 
     else{
          respuesta = await MySql.realizarQuery(`SELECT * FROM Partidas;`)
     }
@@ -121,8 +120,8 @@ app.post('/insertarUsuario', async function(req,res) {
     console.log(req.body)
     var usuarioNuevo = await MySql.realizarQuery(`SELECT * FROM Usuarios WHERE nombre_usuario = '${req.body.nombre_usuario}'`);
     if (usuarioNuevo.length==0) {
-        await MySql.realizarQuery(`INSERT INTO Usuarios (nombre_usuario, contraseña, puntaje_usuario, partidas_ganadas, partidas_perdidas) 
-        VALUES ('${req.body.nombre_usuario}', '${req.body.contraseña}', 0, 0, 0)`);
+        await MySql.realizarQuery(`INSERT INTO Usuarios (nombre_usuario, contraseña) 
+        VALUES ('${req.body.nombre_usuario}', '${req.body.contraseña}')`);
         res.send("ok")
     } else {
         res.send("Ya existe");
