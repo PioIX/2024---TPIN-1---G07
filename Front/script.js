@@ -140,6 +140,8 @@ async function elegirPalabra() {
 }
 
 let puntaje = 0
+let partidas_ganadas = 0
+let partidas_perdidas = 0
 function chequearPalabra() {
   let palabra_chequeada = []
   let letras_faltantes = []
@@ -173,8 +175,9 @@ function chequearPalabra() {
         if (palabra_chequeada.includes(celdas2[i])) {
 
           console.log(celdas2)
+          let indice = palabra_chequeada.indexOf(celdas2[i])
           document.getElementById(i+(5*comienzoFila)).style.background = "#ffff00"
-          palabra_chequeada[i] = "-"
+          palabra_chequeada[indice] = "-"
           console.log(`Celdas 2 quedo `, celdas2)
         }
       }
@@ -186,13 +189,22 @@ function chequearPalabra() {
     if (palabra_chequeada[i]==".")
       contador++;
   }
+
   if (contador==5) {
     let i = 0
     while(i<6) {
-      if (comienzoFila==i) 
+      if (comienzoFila==i) {
         puntaje = 6-i
+        sumarPuntaje()
+        partidas_ganadas++
+      }
       i++;
     }
+    alert("Haz ganado")
+    changeScreen2()
+  } else if (comienzoFila==6 && contador!=5){
+    partidas_perdidas++;
+    alert("Haz perdido")
     changeScreen2()
   }
   console.log(palabra_chequeada)
@@ -213,5 +225,6 @@ async function sumarPuntaje() {
      body:JSON.stringify(data),
  })
  let result = await response.json()
- document.getElementById("puntajetotal") = result.puntaje
+ console.log(result.puntaje)
+ document.getElementById("puntajetotal").innerHTML = result.puntaje
 }
