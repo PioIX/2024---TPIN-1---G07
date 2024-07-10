@@ -1,11 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #b0b5d8;
+    background-color: #bebebe;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    color: #000;
+    flex-direction: column;
 }
 
 .container {
@@ -19,6 +21,21 @@ body {
     margin-bottom: 20px;
 }
 
+h3{
+    color: #000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h4{
+    color: #000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.form-group{
+    color: #000;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
 .header h1 {
     margin: 0;
     text-align: center;
@@ -26,6 +43,10 @@ body {
 
 .menu-icon, .settings-icon {
     font-size: 24px;
+}
+
+.form-groups{
+    display: inline-flex;
 }
 
 .grid {
@@ -75,9 +96,8 @@ body {
 }
 
 .key:hover {
-    background-color: #555;
+    background-color: #bebebe;
 }
-
 
 .estadisticas {
     display: flex;
@@ -85,10 +105,10 @@ body {
 }
 
 .reinicio {
-    background-color: #ccc;
     border: 0px;
     height: 20px;
     width: auto;
+    background-color: #bebebe;
 }
 
 .reinicio:hover {
@@ -97,10 +117,10 @@ body {
 }
 
 .logout {
-    background-color: #ccc;
     border: 0px;
     height: 27px;
     width: auto;
+    background-color: #bebebe;
 }
 
 .logout:hover {
