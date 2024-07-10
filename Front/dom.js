@@ -44,3 +44,16 @@ function changeScreen3() {
         document.getElementById("password").value = ""
     }
 }
+
+function changeScreen4() {
+    const header = document.getElementById("header");
+    const grid = document.getElementById("grid");
+    const keyboard = document.getElementById("keyboard");
+    const puntaje = document.getElementById("puntaje");
+    if(puntaje.style.display !== "none") {
+        header.style.display = "";
+        grid.style.display = "";
+        keyboard.style.display = "";
+        puntaje.style.display = "none";
+    }
+}
