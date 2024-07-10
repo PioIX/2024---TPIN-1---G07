@@ -21,6 +21,7 @@ body {
 
 .header h1 {
     margin: 0;
+    text-align: center;
 }
 
 .menu-icon, .settings-icon {
@@ -81,4 +82,28 @@ body {
 .estadisticas {
     display: flex;
     justify-content: space-between;
+}
+
+.reinicio {
+    background-color: #ccc;
+    border: 0px;
+    height: 20px;
+    width: auto;
+}
+
+.reinicio:hover {
+    height: 22px;
+    width: auto;
+}
+
+.logout {
+    background-color: #ccc;
+    border: 0px;
+    height: 27px;
+    width: auto;
+}
+
+.logout:hover {
+    height: 29px;
+    width: auto;
 }
