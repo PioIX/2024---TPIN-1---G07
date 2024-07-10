@@ -35,14 +35,14 @@ function changeScreen3() {
     const keyboard = document.getElementById("keyboard");
     const header = document.getElementById("header");
     const login = document.getElementById("login");
-    if(grid.style.display !== "none" && keyboard.style.display !== "none") {
-        login.style.display = "";
-        grid.style.display = "none";
-        keyboard.style.display = "none";
-        header.style.display = "none";
-        document.getElementById("username").value = ""
-        document.getElementById("password").value = ""
-    }
+    const puntaje = document.getElementById("puntaje");
+    login.style.display = "";
+    grid.style.display = "none";
+    keyboard.style.display = "none";
+    header.style.display = "none";
+    puntaje.style.display = "none";
+    document.getElementById("username").value = ""
+    document.getElementById("password").value = ""
 }
 
 function changeScreen4() {
