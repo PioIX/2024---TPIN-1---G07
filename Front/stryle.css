@@ -29,11 +29,13 @@ h3{
 h4{
     color: #000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
 }
 
 .form-group{
     color: #000;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
 }
 
 .header h1 {
@@ -142,4 +144,3 @@ h4{
     height: 26px;
     width: auto;
 }
-
