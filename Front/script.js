@@ -28,6 +28,30 @@ async function existeUsuario() {
     }
 }
 
+async function existeNombreUsuario() {
+  const data = {
+    nombre_usuario : document.getElementById("username").value
+  }
+
+  const response = await fetch('http://localhost:3000/usuarioexiste',{
+    method:"POST",
+    headers: {
+        "Content-Type": "application/json",
+      },
+    body:JSON.stringify(data),
+  })
+
+  console.log(response)
+    //Tengo que usar el await porque la respuesta del servidor es lenta
+    const result = await response.json()
+    console.log(result)
+    if (result.length==0) {
+        return false
+    } else {
+        return true
+    }
+}
+
 //7
 async function ingresarUsuario() {
   if (await existeUsuario() == true) {
@@ -58,7 +82,12 @@ async function registrarNuevoUsuario() {
       })
     
       console.log(response)
-      ingresarUsuario()
+      if (await existeNombreUsuario() == true) {
+        alert("El nombre de usuario ya existe")
+      } else {
+        alert("Se ha registrado exitosamente")
+        ingresarUsuario()
+      }   
 }
 
 
@@ -289,4 +318,24 @@ async function sumarPartidasYPuntajes() {
   await sumarPuntaje()
   await sumarPartidasGanadas()
   await sumarPartidasPerdidas()
+}
+
+async function reiniciarPartida() {
+  const celdas = document.querySelectorAll('.cell');
+  for (let i = 0; i < celdas.length; i++) {
+    celdas[i].value = ""
+    document.getElementById(i).readonly = false
+    document.getElementById(i).disabled = false
+    document.getElementById(i).style.background = "#ffffff"
+  }
+  indiceCeldaActual = 0
+  palabra_elegida = ""
+  caracteres_palabra_elegida = []
+  await elegirPalabra()
+}
+
+function logout() {
+  changeScreen3()
+  id_usuario_logueado = 0
+  reiniciarPartida()
 }

@@ -104,6 +104,21 @@ app.post('/usuarios', async function(req,res){
    
 })
 
+app.post('/usuarioexiste', async function(req,res){
+    console.log(req.body)
+    let respuesta = ""
+    if (req.body.nombre_usuario) {
+         respuesta = await MySql.realizarQuery(`SELECT * FROM Usuarios WHERE 
+        nombre_usuario = "${req.body.nombre_usuario}"`)
+    }
+    else{
+         respuesta = await MySql.realizarQuery(`SELECT * FROM Usarios;`)
+    }
+    res.send(respuesta) 
+   
+})
+
+
 app.post('/insertarPalabra', async function(req,res) {
     console.log(req.body)
     var palabraNueva = await MySql.realizarQuery(`SELECT * FROM Palabras WHERE nombre = '${req.body.nombre}'`);

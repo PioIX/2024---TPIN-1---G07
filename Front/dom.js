@@ -29,3 +29,18 @@ function changeScreen2() {
         puntaje.style.display = "";
     }
 }
+
+function changeScreen3() {
+    const grid = document.getElementById("grid");
+    const keyboard = document.getElementById("keyboard");
+    const header = document.getElementById("header");
+    const login = document.getElementById("login");
+    if(grid.style.display !== "none" && keyboard.style.display !== "none") {
+        login.style.display = "";
+        grid.style.display = "none";
+        keyboard.style.display = "none";
+        header.style.display = "none";
+        document.getElementById("username").value = ""
+        document.getElementById("password").value = ""
+    }
+}
