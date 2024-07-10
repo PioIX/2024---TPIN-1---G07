@@ -339,3 +339,11 @@ function logout() {
   id_usuario_logueado = 0
   reiniciarPartida()
 }
+
+function volverJugar() {
+  changeScreen4()
+  reiniciarPartida()
+  puntaje = 0
+  partidas_ganadas = 0
+  partidas_perdidas = 0
+}
