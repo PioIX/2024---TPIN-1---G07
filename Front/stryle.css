@@ -94,7 +94,7 @@ h4{
 }
 
 .key:hover {
-    background-color: #bebebe;
+    background-color: #b84545;
 }
 
 .estadisticas {
@@ -152,7 +152,7 @@ h4{
     display: inline-block;
     margin-left: 10px;
     margin-right: 10px;
-    width: 110px;
+    width: auto;
     height: 27px;
     font-size: large;
 }
