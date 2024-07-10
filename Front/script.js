@@ -28,6 +28,30 @@ async function existeUsuario() {
     }
 }
 
+async function existeNombreUsuario() {
+  const data = {
+    nombre_usuario : document.getElementById("username").value
+  }
+
+  const response = await fetch('http://localhost:3000/usuarioexiste',{
+    method:"POST",
+    headers: {
+        "Content-Type": "application/json",
+      },
+    body:JSON.stringify(data),
+  })
+
+  console.log(response)
+    //Tengo que usar el await porque la respuesta del servidor es lenta
+    const result = await response.json()
+    console.log(result)
+    if (result.length==0) {
+        return false
+    } else {
+        return true
+    }
+}
+
 //7
 async function ingresarUsuario() {
   if (await existeUsuario() == true) {
@@ -58,7 +82,12 @@ async function registrarNuevoUsuario() {
       })
     
       console.log(response)
-      ingresarUsuario()
+      if (await existeNombreUsuario() == true) {
+        alert("El nombre de usuario ya existe")
+      } else {
+        alert("Se ha registrado exitosamente")
+        ingresarUsuario()
+      }   
 }
 
 
@@ -81,7 +110,9 @@ document.addEventListener('DOMContentLoaded', () => {
           
           if (e.key.match(/^[a-zA-Z]$/) && indiceCeldaActual < celdas.length) {
             celdas[indiceCeldaActual].value = e.key.toUpperCase();
+      
             moverACeldaSiguiente();
+          
           } else if (e.key === 'Backspace') {
             moverACeldaAnterior();
           }
@@ -89,10 +120,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     function moverACeldaSiguiente() {
-         if (indiceCeldaActual < celdas.length - 1) {
+         if (indiceCeldaActual < celdas.length) {
             indiceCeldaActual++;
             console.log(indiceCeldaActual)
+
             chequearPalabra();
+
         }
     }
 
@@ -149,11 +182,20 @@ function chequearPalabra() {
   const celdas = document.querySelectorAll('.cell');
   let comienzoFila = 0;
   let i = 0;
-  while(celdas[i * 5].value != "" && i < 5)
-    i++;
-  comienzoFila = i - 1;
+  let numeroDeCelda = 0
+  while(celdas[numeroDeCelda].value != "" && i < 6)
+    {
+      i++;
+      numeroDeCelda = i * 5;
+      if (numeroDeCelda >= 30) {
+        numeroDeCelda = 29;
+      }
+    }
 
+  comienzoFila = i - 1;
+  //console.log("comienzo fila " + comienzoFila + " indiceCeldaActual: " + indiceCeldaActual)
   if ((indiceCeldaActual % 5)  == 0){
+    console.log("comienzo fila " + comienzoFila + " indiceCeldaActual: " + indiceCeldaActual)
     for (let i = (comienzoFila * 5); i < ((comienzoFila * 5) + 5); i++) {
       celdas2.push(celdas[i].value)
     }
@@ -189,23 +231,30 @@ function chequearPalabra() {
     if (palabra_chequeada[i]==".")
       contador++;
   }
-
+  console.log("Llego aca")
+  console.log("Celda: " + celdas[29].value + " Contador: " + contador)
   if (contador==5) {
-    let i = 0
-    while(i<6) {
-      if (comienzoFila==i) {
-        puntaje = 6-i
-        sumarPuntaje()
-        partidas_ganadas++
+    setTimeout(() => {
+      let i = 0
+      while(i<6) {
+        if (comienzoFila==i) {
+          puntaje = 6-i
+          partidas_ganadas++
+          sumarPartidasYPuntajes()
+        }
+        i++;
       }
-      i++;
-    }
-    alert("Haz ganado")
-    changeScreen2()
-  } else if (comienzoFila==6 && contador!=5){
-    partidas_perdidas++;
-    alert("Haz perdido")
-    changeScreen2()
+      alert("Haz ganado")
+      changeScreen2()
+    }, "1000");
+  } else if (celdas[29].value != "" && contador!=5){
+    setTimeout(() => {
+      console.log("Retrasado por 1 segundo.");
+      partidas_perdidas++;
+      sumarPartidasYPuntajes()
+      alert("Haz perdido")
+      changeScreen2()
+    }, "1000");
   }
   console.log(palabra_chequeada)
   console.log(letras_faltantes)
@@ -227,4 +276,66 @@ async function sumarPuntaje() {
  let result = await response.json()
  console.log(result.puntaje)
  document.getElementById("puntajetotal").innerHTML = result.puntaje
+}
+
+async function sumarPartidasGanadas() {
+  const data = {
+    partidas_ganadas: partidas_ganadas,
+    id_usuario: id_usuario_logueado
+ }
+
+ const response = await fetch('http://localhost:3000/modificarUsuarioPartidasganadas',{
+     method:"PUT",
+     headers: {
+         "Content-Type": "application/json",
+       },
+     body:JSON.stringify(data),
+ })
+ let result = await response.json()
+ console.log(result.ganadas)
+ document.getElementById("partidasganadas").innerHTML = result.ganadas
+}
+
+async function sumarPartidasPerdidas() {
+  const data = {
+    partidas_perdidas: partidas_perdidas,
+    id_usuario: id_usuario_logueado
+ }
+
+ const response = await fetch('http://localhost:3000/modificarUsuarioPartidasperdidas',{
+     method:"PUT",
+     headers: {
+         "Content-Type": "application/json",
+       },
+     body:JSON.stringify(data),
+ })
+ let result = await response.json()
+ console.log({result})
+ document.getElementById("partidasperdidas").innerHTML = result.perdidas
+}
+
+async function sumarPartidasYPuntajes() {
+  await sumarPuntaje()
+  await sumarPartidasGanadas()
+  await sumarPartidasPerdidas()
+}
+
+async function reiniciarPartida() {
+  const celdas = document.querySelectorAll('.cell');
+  for (let i = 0; i < celdas.length; i++) {
+    celdas[i].value = ""
+    document.getElementById(i).readonly = false
+    document.getElementById(i).disabled = false
+    document.getElementById(i).style.background = "#ffffff"
+  }
+  indiceCeldaActual = 0
+  palabra_elegida = ""
+  caracteres_palabra_elegida = []
+  await elegirPalabra()
+}
+
+function logout() {
+  changeScreen3()
+  id_usuario_logueado = 0
+  reiniciarPartida()
 }

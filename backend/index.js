@@ -104,6 +104,21 @@ app.post('/usuarios', async function(req,res){
    
 })
 
+app.post('/usuarioexiste', async function(req,res){
+    console.log(req.body)
+    let respuesta = ""
+    if (req.body.nombre_usuario) {
+         respuesta = await MySql.realizarQuery(`SELECT * FROM Usuarios WHERE 
+        nombre_usuario = "${req.body.nombre_usuario}"`)
+    }
+    else{
+         respuesta = await MySql.realizarQuery(`SELECT * FROM Usarios;`)
+    }
+    res.send(respuesta) 
+   
+})
+
+
 app.post('/insertarPalabra', async function(req,res) {
     console.log(req.body)
     var palabraNueva = await MySql.realizarQuery(`SELECT * FROM Palabras WHERE nombre = '${req.body.nombre}'`);
@@ -145,6 +160,20 @@ app.put('/modificarUsuarioPuntaje', async function(req,res){
     response = await MySql.realizarQuery(`SELECT puntaje_usuario FROM Usuarios WHERE id_usuario= ${req.body.id_usuario}`);
     await MySql.realizarQuery(`UPDATE Usuarios SET puntaje_usuario = '${req.body.puntaje_usuario + response[0].puntaje_usuario}' WHERE id_usuario= ${req.body.id_usuario}`);
     res.send({puntaje: req.body.puntaje_usuario + response[0].puntaje_usuario})
+})
+
+app.put('/modificarUsuarioPartidasganadas', async function(req,res){
+    console.log(req.body)
+    response = await MySql.realizarQuery(`SELECT partidas_ganadas FROM Usuarios WHERE id_usuario= ${req.body.id_usuario}`);
+    await MySql.realizarQuery(`UPDATE Usuarios SET partidas_ganadas = '${req.body.partidas_ganadas + response[0].partidas_ganadas}' WHERE id_usuario= ${req.body.id_usuario}`);
+    res.send({ganadas: req.body.partidas_ganadas + response[0].partidas_ganadas})
+})
+
+app.put('/modificarUsuarioPartidasperdidas', async function(req,res){
+    console.log(req.body)
+    response = await MySql.realizarQuery(`SELECT partidas_perdidas FROM Usuarios WHERE id_usuario= ${req.body.id_usuario}`);
+    await MySql.realizarQuery(`UPDATE Usuarios SET partidas_perdidas = '${req.body.partidas_perdidas + response[0].partidas_perdidas}' WHERE id_usuario= ${req.body.id_usuario}`);
+    res.send({perdidas: req.body.partidas_perdidas + response[0].partidas_perdidas})
 })
 
 app.delete('/eliminarPalabra', async function(req,res){
